@@ -1,0 +1,24 @@
+---
+- name: iti lab3 - loob
+  hosts: web_servers
+  gather_facts: false
+
+  vars:
+    packages_to_install:
+      - package_name: curl
+        package_state: present
+      - package_name: vim
+        package_state: latest
+      - package_name: ssh
+        package_state: absent
+
+  tasks:
+    - name: Update package cache (apt for Debian/Ubuntu)
+      apt:
+        update_cache: yes
+
+    - name: Install latest version of packages
+      package:
+        name: "{{ item.package_name }}"
+        state: "{{ item.package_state }}"
+      loop: "{{ packages_to_install }}"

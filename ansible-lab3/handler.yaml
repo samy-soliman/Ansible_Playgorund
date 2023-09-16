@@ -1,0 +1,29 @@
+---
+- name: Install a package using a variable
+  hosts: web_servers 
+  vars:
+    package_name: nginx
+    files_list:
+      - index.html
+      - file.css  # dump file
+      - file.js   # dump file
+
+  tasks:
+    - name: Install the package
+      package:
+        name: "{{ package_name }}"
+        state: present
+      notify: copy_files_to_webroot
+      changed_when: true 
+  
+
+  handlers:
+    - name: copy_files_to_webroot
+      copy:
+        src: "./{{ item }}"
+        dest: /var/www/html/{{ item }}
+      loop: "{{ files_list }}"
+      notify: restart_nginx
+    
+    - name: restart_nginx
+      ansible.builtin.shell: service nginx restart

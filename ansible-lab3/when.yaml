@@ -1,0 +1,29 @@
+---
+- name: Install Web Server and Restart Service
+  hosts: web_servers
+
+  tasks:
+    - name: Install Nginx on Ubuntu
+      apt:
+        name: nginx
+        state: present
+      when: ansible_facts['distribution'] == 'Ubuntu'
+
+    - name: Install Apache HTTPd on CentOS
+      yum:
+        name: httpd
+        state: present
+      when: ansible_facts['distribution'] == 'CentOS'
+
+    
+    #- name: Restart Nginx Service on Ubuntu
+    #  systemd:
+    #    name: nginx
+    #    state: restarted
+    #  when: ansible_facts['distribution'] == 'Ubuntu'
+
+    #- name: Restart HTTPd Service on CentOS
+    #  systemd:
+    #    name: httpd
+    #    state: restarted
+    #  when: ansible_facts['distribution'] == 'CentOS'

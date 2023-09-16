@@ -1,0 +1,19 @@
+---
+- name: Install and restart service if necessary
+  hosts: web_servers
+
+  tasks:
+    - name: Install your application
+      apt:
+        name: nginx
+        state: latest
+      register: install_result 
+
+    - name: Check if installation changed or failed
+      debug:
+        var: install_result.changed
+      when: install_result is defined and install_result.failed == false
+
+    - name: Restart the service if installation changed or didn't fail
+      ansible.builtin.shell: service nginx restart
+      when: install_result is defined and (install_result.changed or install_result.failed == false)
