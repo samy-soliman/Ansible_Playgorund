@@ -1,0 +1,23 @@
+---
+- name: Web Server Setup
+  hosts: web_servers
+
+  tasks:
+    - name: Update Cache
+      apt:
+        update_cache: yes
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Install Latest Nginx
+      apt:
+        name: nginx
+        state: latest
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Copy index.html from Controller to Host 1
+      copy:
+        src: ./index.html 
+        dest: /var/www/html/index.html
+
+    - name: Restart Nginx
+      ansible.builtin.shell: service nginx restart

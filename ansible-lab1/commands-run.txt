@@ -1,0 +1,3 @@
+ansible all -i inventory --private-key ~/.ssh/devops -u ubuntu -m ping
+
+ansible all -m ping

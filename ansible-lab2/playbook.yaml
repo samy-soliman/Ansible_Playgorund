@@ -1,0 +1,10 @@
+---
+- name: iti lab twoo
+  hosts: web_servers
+  gather_facts: false
+  tasks:
+    - name: Update APT Cache
+      apt:
+        update_cache: yes
+
+

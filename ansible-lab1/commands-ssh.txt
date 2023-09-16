@@ -1,0 +1,20 @@
+#load a key to the ssh agent
+ssh-add /path/to/your/private-key
+
+# kill ssh agent process
+ssh-agent -k
+
+# start ssh agent and its env's
+eval $(ssh-agent)
+
+# ssh agent env's
+$SSH_AGENT_PID
+$SSH_AUTH_SOCK
+
+# remove all keys from the ssh agent in the current session and you need to start it to take effect after wards
+ssh-add -D
+
+# list all keys loaded in the ssh agent
+ssh-add -l
+
+
