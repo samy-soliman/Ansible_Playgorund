@@ -1,0 +1,7 @@
+---
+package_name: nginx
+files_list:
+  - file.css  # dump file
+  - file.js   # dump file
+template_name: "index.html.j2"
+template_message: "Hello From Template Role File"

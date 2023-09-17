@@ -1,0 +1,9 @@
+- name: copy_files_to_webroot
+  copy:
+    src: "{{ item }}"
+    dest: "/var/www/html/{{ item }}"
+  loop: "{{ files_list }}"
+  notify: restart_nginx
+    
+- name: restart_nginx
+  ansible.builtin.shell: service "{{ package_name }}" restart

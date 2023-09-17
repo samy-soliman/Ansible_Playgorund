@@ -1,0 +1,6 @@
+---
+package_name: nginx
+files_list:
+  - index.html # hello from vars main.yml
+  - file.css  # dump file
+  - file.js   # dump file

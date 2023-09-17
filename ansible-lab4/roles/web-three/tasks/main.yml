@@ -1,0 +1,15 @@
+---
+- name: Install the package
+  package:
+    name: "{{ package_name }}"
+    state: present
+  notify: copy_files_to_webroot
+  register: package_result
+  changed_when: true
+
+- name: Copy index.html from Controller to Host using Template
+  template:
+    src: "{{ template_name }}"
+    dest: /var/www/html/index.html
+  notify: restart_nginx
+  when: package_result.changed

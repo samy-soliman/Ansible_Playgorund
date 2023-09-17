@@ -1,0 +1,7 @@
+---
+- name: Install the package
+  package:
+    name: "{{ package_name }}"
+    state: present
+  notify: copy_files_to_webroot
+  changed_when: true

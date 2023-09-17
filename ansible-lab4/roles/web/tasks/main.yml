@@ -1,0 +1,17 @@
+---
+- name: Install your application
+  apt:
+    name: "{{ package_name }}"
+    state: latest
+  register: install_result 
+
+- name: copy_files_to_webroot
+  copy:
+    src: "roles/web/files/{{ item }}"
+    dest: "/var/www/html/{{ item }}"
+  loop: "{{ files_list }}"
+  when: install_result is defined and (install_result.changed or install_result.failed == false)
+
+- name: Restart the service if installation changed or didn't fail
+  ansible.builtin.shell: service "{{ package_name }}" restart
+  when: install_result is defined and (install_result.changed or install_result.failed == false)
